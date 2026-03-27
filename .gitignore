@@ -1,0 +1,13 @@
+# Go
+/server/bin
+/server/pkg
+/server/*.exe
+
+# Node
+/client/node_modules
+/client/dist
+
+# Editor
+.vscode
+.DS_Store
+.env
