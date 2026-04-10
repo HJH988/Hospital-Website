@@ -5,11 +5,14 @@ import (
 )
 
 func main() {
-	router := gin.Default()
+	var router *gin.Engine = gin.Default()
 
 	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "CRUD App Backend"})
+		c.JSON(200, gin.H{
+			"message": "Hello World",
+			"status":  "success",
+		})
 	})
 
-	router.Run(":8080")
+	router.Run(":3000")
 }
