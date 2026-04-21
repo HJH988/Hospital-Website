@@ -7,9 +7,11 @@ import (
 func main() {
 	var router *gin.Engine = gin.Default()
 
+	router.SetTrustedProxies(nil)
+
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "Hello World",
+			"message": "API is running well!",
 			"status":  "success",
 		})
 	})
