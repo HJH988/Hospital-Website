@@ -1,12 +1,10 @@
 import React from 'react'
-import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
 
 const App = () => {
   return (
     <>
-      <Navbar />
-      <div className='text-5xl'>App</div>
-      <p>Hello, World!</p>
+      <Sidebar />
     </>
   )
 }
