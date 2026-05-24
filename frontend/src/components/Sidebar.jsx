@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Menu, X } from 'lucide-react'
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true)
@@ -10,81 +9,88 @@ const Sidebar = () => {
       {/* Sidebar */}
       <div
         className={`h-screen bg-gray-900 text-white shadow-lg flex flex-col transition-all duration-300 ${
-          isOpen ? 'w-64' : 'w-20'
+          isOpen ? 'w-64' : 'w-16'
         }`}
       >
 
         {/* Top Section */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
+        <div className="p-4 border-b border-gray-700">
+
+          {/* Hamburger Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-2xl"
+          >
+            ☰
+          </button>
 
           {/* Logo */}
           {isOpen && (
-            <h1 className="text-xl font-bold">
+            <h1 className="text-xl font-bold mt-4">
               Hospital App
             </h1>
           )}
-
-          {/* Toggle Button */}
-          <button onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
 
         {/* Navigation */}
-        <ul className="flex-1 p-4 space-y-2">
+        {isOpen && (
+          <ul className="flex-1 p-4 space-y-2">
 
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
-            >
-              {isOpen ? 'Dashboard' : '🏠'}
-            </a>
-          </li>
+            <li>
+              <a
+                href="#"
+                className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
+              >
+                Dashboard
+              </a>
+            </li>
 
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
-            >
-              {isOpen ? 'Patients' : '👨‍⚕️'}
-            </a>
-          </li>
+            <li>
+              <a
+                href="#"
+                className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
+              >
+                Patients
+              </a>
+            </li>
 
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
-            >
-              {isOpen ? 'Detection' : '🩺'}
-            </a>
-          </li>
+            <li>
+              <a
+                href="#"
+                className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
+              >
+                Detection
+              </a>
+            </li>
 
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
-            >
-              {isOpen ? 'Reports' : '📄'}
-            </a>
-          </li>
+            <li>
+              <a
+                href="#"
+                className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
+              >
+                Reports
+              </a>
+            </li>
 
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
-            >
-              {isOpen ? 'Settings' : '⚙️'}
-            </a>
-          </li>
-        </ul>
+            <li>
+              <a
+                href="#"
+                className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
+              >
+                Settings
+              </a>
+            </li>
+          </ul>
+        )}
 
         {/* Logout */}
-        <div className="p-4 border-t border-gray-700">
-          <button className="w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg transition">
-            {isOpen ? 'Logout' : '🚪'}
-          </button>
-        </div>
+        {isOpen && (
+          <div className="p-4 border-t border-gray-700">
+            <button className="w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg transition">
+              Logout
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Main Content */}
