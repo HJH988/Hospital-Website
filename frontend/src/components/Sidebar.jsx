@@ -24,12 +24,6 @@ const Sidebar = () => {
             ☰
           </button>
 
-          {/* Logo */}
-          {isOpen && (
-            <h1 className="text-xl font-bold mt-4">
-              Hospital App
-            </h1>
-          )}
         </div>
 
         {/* Navigation */}
@@ -93,12 +87,6 @@ const Sidebar = () => {
         )}
       </div>
 
-      {/* Main Content */}
-      <main className="flex-1 p-6 bg-gray-100">
-        <h1 className="text-3xl font-bold">
-          Dashboard
-        </h1>
-      </main>
     </div>
   )
 }
