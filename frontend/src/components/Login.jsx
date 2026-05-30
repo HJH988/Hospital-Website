@@ -9,7 +9,7 @@ const Login = () => {
 
         {/* Title */}
         <h1 className="text-3xl font-bold text-center mb-6">
-          Hospital Login
+          Login Page
         </h1>
 
         {/* Username */}
