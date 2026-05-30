@@ -5,7 +5,7 @@ import Login from './components/login'
 const App = () => {
   return (
     <>
-      <Login />
+      <Sidebar />
     </>
   )
 }
