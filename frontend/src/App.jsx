@@ -5,10 +5,10 @@ import DashBoard from './components/DashBoard'
 
 const App = () => {
   return (
-    <>
+    <div className="flex h-screen">
       <Sidebar />
       <DashBoard />
-    </>
+    </div>
   )
 }
 
