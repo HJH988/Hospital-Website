@@ -1,4 +1,10 @@
 import React from 'react'
+import { 
+  Route, 
+  createBrowserRouter, 
+  RouterProvider, 
+  createRoutesFromElements } from 'react-router-dom'
+
 import Sidebar from './components/Sidebar'
 import Login from './components/login'
 import DashBoard from './components/DashBoard'
@@ -12,7 +18,7 @@ const App = () => {
   return (
     <div className="flex h-screen">
       <Sidebar />
-      <BreastCancer />
+      <PatientList />
     </div>
   )
 }

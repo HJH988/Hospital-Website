@@ -44,7 +44,7 @@ const Sidebar = () => {
                 href="#"
                 className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
               >
-                Patients
+                Patients List
               </a>
             </li>
 
@@ -53,7 +53,7 @@ const Sidebar = () => {
                 href="#"
                 className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
               >
-                Detection
+                Add Patients
               </a>
             </li>
 
@@ -62,7 +62,7 @@ const Sidebar = () => {
                 href="#"
                 className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
               >
-                Reports
+                Breast Cancer Detection
               </a>
             </li>
 
