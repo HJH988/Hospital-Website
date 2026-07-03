@@ -14,15 +14,17 @@ import {
 // import PatientList from './components/PatientList'
 // import BreastCancer from './components/BreastCancer'
 
-import Homepage from './pages/Homepage'
+import LoginPage from './pages/LoginPage'
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<LoginPage />} />
+    <Route path='/Dashboard' element={<DashBoard />} />
+  )
+)
 
 const App = () => {
-  return (
-    <div className="flex h-screen">
-      <Sidebar />
-      <PatientList />
-    </div>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
