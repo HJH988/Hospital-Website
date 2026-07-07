@@ -13,13 +13,20 @@ import {
 // import EditInfo from './components/EditInfo'
 // import PatientList from './components/PatientList'
 // import BreastCancer from './components/BreastCancer'
-
+import MainLayout from './layouts/MainLayout'
 import LoginPage from './pages/LoginPage'
+import DashBoard from './pages/DashBoard'
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<LoginPage />} />
-    <Route path='/Dashboard' element={<DashBoard />} />
+    // <Route path='/' element={<MainLayout />} />
+    //   <Route path='/Login' element={<LoginPage />} />
+    //   <Route path='/Dashboard' element={<DashBoard />} />
+    // </Route>
+
+      <Route path='/Login' element={<LoginPage />} />
+
   )
 )
 
