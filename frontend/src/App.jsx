@@ -20,15 +20,14 @@ import DashBoard from './pages/DashBoard'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    // <Route path='/' element={<MainLayout />} />
-    //   <Route path='/Login' element={<LoginPage />} />
-    //   <Route path='/Dashboard' element={<DashBoard />} />
+    // <Route path='/' element={<MainLayout />} >
+    //   <Route index element={<DashBoard />} />
     // </Route>
-
+    // <Route path='/' element={<DashBoard />} />
     <Route path='/' element={<LoginPage />} />
 
   )
-)
+);
 
 const App = () => {
   return <RouterProvider router={router} />
