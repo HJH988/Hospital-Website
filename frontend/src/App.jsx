@@ -15,16 +15,16 @@ import {
 // import BreastCancer from './components/BreastCancer'
 import MainLayout from './layouts/MainLayout'
 import LoginPage from './pages/LoginPage'
-import DashBoard from './pages/DashBoard'
+import DashBoardPage from './pages/DashBoardPage'
 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    // <Route path='/' element={<MainLayout />} >
-    //   <Route index element={<DashBoard />} />
-    // </Route>
-    // <Route path='/' element={<DashBoard />} />
-    <Route path='/' element={<LoginPage />} />
+    <Route path='/' element={<MainLayout />} >
+      <Route index element={<DashBoardPage />} />
+    </Route>
+    // <Route path='/' element={<DashBoardPage />} />
+    // <Route path='/' element={<LoginPage />} />
 
   )
 );

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Dashboard = () => {
+const DashBoard = () => {
   return (
     <div className="flex-1 p-6 bg-gray-100 min-h-screen">
 
@@ -68,4 +68,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default DashBoard
