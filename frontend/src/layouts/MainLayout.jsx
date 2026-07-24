@@ -4,11 +4,13 @@ import Sidebar from '../components/Sidebar'
 
 const MainLayout = () => {
   return (
-    <>
+    <div className="flex min-h-screen">
       <Sidebar />
-      <Outlet />
-    </>
-  );
+      <main className="flex-1">
+        <Outlet />
+      </main>
+    </div>
+  )
 }
 
 export default MainLayout

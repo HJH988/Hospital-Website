@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const PatientList = () => {
   return (
@@ -15,9 +16,9 @@ const PatientList = () => {
           </p>
         </div>
 
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        <Link to="/addpatient" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
           Add Patient
-        </button>
+        </Link>
       </div>
 
       {/* Search Bar */}
@@ -52,17 +53,17 @@ const PatientList = () => {
               <td className="p-4">Female</td>
               <td className="p-4">91234567</td>
               <td className="p-4 space-x-2">
-                <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+                <Link to="/patientinfo" className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
                   View
-                </button>
+                </Link>
 
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
+                <Link to="/editinfo" className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
                   Edit
-                </button>
+                </Link>
 
-                <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                <Link className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
                   Delete
-                </button>
+                </Link>
               </td>
             </tr>
 
@@ -72,17 +73,17 @@ const PatientList = () => {
               <td className="p-4">Female</td>
               <td className="p-4">98765432</td>
               <td className="p-4 space-x-2">
-                <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+                <Link to="/patientinfo" className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
                   View
-                </button>
+                </Link>
 
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
+                <Link to="/editinfo" className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
                   Edit
-                </button>
+                </Link>
 
-                <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                <Link className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
                   Delete
-                </button>
+                </Link>
               </td>
             </tr>
 
@@ -92,17 +93,17 @@ const PatientList = () => {
               <td className="p-4">Female</td>
               <td className="p-4">87654321</td>
               <td className="p-4 space-x-2">
-                <button className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+                <Link to="/patientinfo" className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
                   View
-                </button>
+                </Link>
 
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
+                <Link to="/editinfo" className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
                   Edit
-                </button>
+                </Link>
 
-                <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                <Link className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
                   Delete
-                </button>
+                </Link>
               </td>
             </tr>
 
