@@ -1,11 +1,31 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+
+	"github.com/example/crud-app/database"
 )
 
 func main() {
-	var router *gin.Engine = gin.Default()
+
+	err := godotenv.Load()
+
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	db, err := database.Connect()
+
+	if err != nil {
+		log.Fatal("Failed to connect to database:", err)
+	}
+
+	defer db.Close()
+
+	router := gin.Default()
 
 	router.SetTrustedProxies(nil)
 
