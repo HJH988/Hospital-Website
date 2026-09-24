@@ -7,6 +7,7 @@ import (
 	"github.com/joho/godotenv"
 
 	"github.com/example/crud-app/database"
+	"github.com/example/crud-app/routes"
 )
 
 func main() {
@@ -28,6 +29,8 @@ func main() {
 	router := gin.Default()
 
 	router.SetTrustedProxies(nil)
+
+	routes.PatientRoutes(router, db)
 
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
