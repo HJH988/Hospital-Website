@@ -90,3 +90,43 @@ func GetPatient(db *pgxpool.Pool) gin.HandlerFunc {
 		c.JSON(http.StatusOK, patient)
 	}
 }
+
+func CreatePatient(db *pgxpool.Pool) gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		var patient models.Patient
+
+		err := c.ShouldBindJSON(&patient)
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Invalid patient data",
+			})
+			return
+		}
+
+		err = db.QueryRow(
+			context.Background(),
+			`INSERT INTO patients
+				(name, age, gender, phone, email, medical_notes)
+			 VALUES
+				($1, $2, $3, $4, $5, $6)
+			 RETURNING id`,
+			patient.Name,
+			patient.Age,
+			patient.Gender,
+			patient.Phone,
+			patient.Email,
+			patient.MedicalNotes,
+		).Scan(&patient.ID)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Failed to create patient",
+			})
+			return
+		}
+
+		c.JSON(http.StatusCreated, patient)
+	}
+}
