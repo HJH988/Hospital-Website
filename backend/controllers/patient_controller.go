@@ -56,3 +56,37 @@ func GetPatients(db *pgxpool.Pool) gin.HandlerFunc {
 		c.JSON(http.StatusOK, patients)
 	}
 }
+
+func GetPatient(db *pgxpool.Pool) gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		id := c.Param("id")
+
+		var patient models.Patient
+
+		err := db.QueryRow(
+			context.Background(),
+			`SELECT id, name, age, gender, phone, email, medical_notes
+			 FROM patients
+			 WHERE id = $1`,
+			id,
+		).Scan(
+			&patient.ID,
+			&patient.Name,
+			&patient.Age,
+			&patient.Gender,
+			&patient.Phone,
+			&patient.Email,
+			&patient.MedicalNotes,
+		)
+
+		if err != nil {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "Patient not found",
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, patient)
+	}
+}

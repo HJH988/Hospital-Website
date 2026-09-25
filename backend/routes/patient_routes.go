@@ -11,4 +11,6 @@ func PatientRoutes(router *gin.Engine, db *pgxpool.Pool) {
 
 	router.GET("/patients", controllers.GetPatients(db))
 
+	router.GET("/patients/:id", controllers.GetPatient(db))
+
 }
