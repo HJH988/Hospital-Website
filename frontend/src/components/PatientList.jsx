@@ -3,6 +3,21 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 const PatientList = () => {
+
+  const [patients, setPatients] = useState([])
+
+  useEffect(() => {
+    fetch('http://localhost:3000/patients')
+      .then(response => response.json())
+      .then(data => {
+        console.log("Patients received:", data)
+        setPatients(data)
+      })
+      .catch(error => {
+        console.error('Error fetching patients:', error)
+      })
+  }, [])
+
   return (
     <div className="flex-1 p-6 bg-gray-100 min-h-screen">
 
@@ -47,67 +62,38 @@ const PatientList = () => {
           </thead>
 
           <tbody>
+            {patients.map((patient) => (
+              <tr key={patient.id} className="border-t">
+                <td className="p-4">{patient.name}</td>
+                <td className="p-4">{patient.age}</td>
+                <td className="p-4">{patient.gender}</td>
+                <td className="p-4">{patient.phone}</td>
 
-            <tr className="border-t">
-              <td className="p-4">Sarah Lee</td>
-              <td className="p-4">45</td>
-              <td className="p-4">Female</td>
-              <td className="p-4">91234567</td>
-              <td className="p-4 space-x-2">
-                <Link to="/patientinfo" className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
-                  View
-                </Link>
+                <td className="p-4 space-x-2">
 
-                <Link to="/editinfo" className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
-                  Edit
-                </Link>
+                  <Link
+                    to={`/patientinfo/${patient.id}`}
+                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded"
+                  >
+                    View
+                  </Link>
 
-                <Link className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
-                  Delete
-                </Link>
-              </td>
-            </tr>
+                  <Link
+                    to={`/editinfo/${patient.id}`}
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
+                  >
+                    Edit
+                  </Link>
 
-            <tr className="border-t">
-              <td className="p-4">Emma Tan</td>
-              <td className="p-4">52</td>
-              <td className="p-4">Female</td>
-              <td className="p-4">98765432</td>
-              <td className="p-4 space-x-2">
-                <Link to="/patientinfo" className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
-                  View
-                </Link>
+                  <button
+                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                  >
+                    Delete
+                  </button>
 
-                <Link to="/editinfo" className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
-                  Edit
-                </Link>
-
-                <Link className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
-                  Delete
-                </Link>
-              </td>
-            </tr>
-
-            <tr className="border-t">
-              <td className="p-4">Jane Lim</td>
-              <td className="p-4">38</td>
-              <td className="p-4">Female</td>
-              <td className="p-4">87654321</td>
-              <td className="p-4 space-x-2">
-                <Link to="/patientinfo" className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
-                  View
-                </Link>
-
-                <Link to="/editinfo" className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">
-                  Edit
-                </Link>
-
-                <Link className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
-                  Delete
-                </Link>
-              </td>
-            </tr>
-
+                </td>
+              </tr>
+            ))}
           </tbody>
 
         </table>
