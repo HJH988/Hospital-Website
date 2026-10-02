@@ -52,7 +52,7 @@ const AddPatient = () => {
       console.log('Patient created:', data)
 
       // Go back to patient list
-      navigate('/patients')
+      navigate('/patientslist')
 
     } catch (error) {
       console.error('Error creating patient:', error)
