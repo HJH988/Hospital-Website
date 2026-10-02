@@ -30,8 +30,8 @@ const router = createBrowserRouter(
       <Route path='/patientslist' element={<PatientListPage />} />
       <Route path='/addpatient' element={<AddPatientPage />} />
       <Route path='/breastcancer' element={<BreastCancerPage />} />
-      <Route path='/patientinfo' element={<PatientInfoPage />} />
-      <Route path='/editinfo' element={<EditInfoPage />} />
+      <Route path='/patientinfo/:id' element={<PatientInfoPage />} />
+      <Route path='/editinfo/:id' element={<EditInfoPage />} />
     </Route>
 
   )
