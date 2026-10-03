@@ -18,6 +18,46 @@ const PatientList = () => {
       })
   }, [])
 
+  const handleDelete = async (id) => {
+
+  const confirmDelete = window.confirm(
+    'Are you sure you want to delete this patient?'
+  )
+
+  if (!confirmDelete) {
+    return
+  }
+
+  try {
+
+    const response = await fetch(
+      `http://localhost:3000/patients/${id}`,
+      {
+        method: 'DELETE'
+      }
+    )
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      console.error(data)
+      return
+    }
+
+    console.log('Patient deleted:', data)
+
+    // Remove patient from the screen
+    setPatients(
+      patients.filter(patient => patient.id !== id)
+    )
+
+  } catch (error) {
+
+    console.error('Error deleting patient:', error)
+
+  }
+}
+
   return (
     <div className="flex-1 p-6 bg-gray-100 min-h-screen">
 
@@ -86,6 +126,7 @@ const PatientList = () => {
                   </Link>
 
                   <button
+                    onClick={() => handleDelete(patient.id)}
                     className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
                   >
                     Delete
