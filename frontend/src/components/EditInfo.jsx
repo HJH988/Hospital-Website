@@ -1,6 +1,145 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 
 const EditInfo = () => {
+
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const [patient, setPatient] = useState({
+    name: '',
+    age: '',
+    gender: 'Male',
+    phone: '',
+    email: '',
+    medical_notes: ''
+  })
+
+  const [error, setError] = useState('')
+
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+
+    fetch(`http://localhost:3000/patients/${id}`)
+      .then(response => {
+
+        if (!response.ok) {
+          throw new Error('Patient not found')
+        }
+
+        return response.json()
+      })
+      .then(data => {
+
+        console.log('Patient received:', data)
+
+        setPatient({
+          name: data.name,
+          age: data.age,
+          gender: data.gender,
+          phone: data.phone,
+          email: data.email,
+          medical_notes: data.medical_notes
+        })
+
+        setLoading(false)
+      })
+      .catch(error => {
+
+        console.error('Error fetching patient:', error)
+
+        setError('Failed to load patient information')
+
+        setLoading(false)
+      })
+
+  }, [id])
+
+  const handleChange = (event) => {
+    const { name, value } = event.target
+
+    setPatient({
+      ...patient,
+      [name]: value
+    })
+  }
+
+ const handleSubmit = async (event) => {
+
+    event.preventDefault()
+
+    setError('')
+
+    try {
+
+      const response = await fetch(
+        `http://localhost:3000/patients/${id}`,
+        {
+          method: 'PUT',
+
+          headers: {
+            'Content-Type': 'application/json'
+          },
+
+          body: JSON.stringify({
+            ...patient,
+            age: Number(patient.age)
+          })
+        }
+      )
+
+      const data = await response.json()
+
+      if (!response.ok) {
+
+        setError(data.error || 'Failed to update patient')
+
+        return
+      }
+
+      console.log('Patient updated:', data)
+
+      // Go back to patient list
+      navigate('/patientslist')
+
+    } catch (error) {
+
+      console.error('Error updating patient:', error)
+
+      setError('Could not connect to the server')
+    }
+  }
+
+
+  // Loading screen
+  if (loading) {
+
+    return (
+      <div className="flex-1 p-6 bg-gray-100 min-h-screen">
+
+        <p>
+          Loading patient information...
+        </p>
+
+      </div>
+    )
+  }
+
+
+  // Error screen
+  if (error && !patient.name) {
+
+    return (
+      <div className="flex-1 p-6 bg-gray-100 min-h-screen">
+
+        <p className="text-red-500">
+          {error}
+        </p>
+
+      </div>
+    )
+  }
+
   return (
     <div className="flex-1 p-6 bg-gray-100 min-h-screen">
 
@@ -14,10 +153,20 @@ const EditInfo = () => {
         </p>
       </div>
 
+      {/* Error message */}
+      {error && (
+        <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-6 max-w-2xl">
+          {error}
+        </div>
+      )}
+
       {/* Form */}
       <div className="bg-white rounded-xl shadow p-6 max-w-2xl">
 
-        <form className="space-y-4">
+        <form 
+          onSubmit={handleSubmit}
+          className="space-y-4"
+        >
 
           <div>
             <label className="block font-medium mb-2">
@@ -25,8 +174,12 @@ const EditInfo = () => {
             </label>
             <input
               type="text"
-              defaultValue="Sarah Lee"
+              name="name"
+              value={patient.name}
+              onChange={handleChange}
               className="w-full border rounded-lg p-3"
+              placeholder="Enter full name"
+              required
             />
           </div>
 
@@ -36,8 +189,13 @@ const EditInfo = () => {
             </label>
             <input
               type="number"
-              defaultValue="45"
+              name="age"
+              value={patient.age}
+              onChange={handleChange}
               className="w-full border rounded-lg p-3"
+              placeholder="Enter age"
+              min="0"
+              required
             />
           </div>
 
@@ -46,8 +204,11 @@ const EditInfo = () => {
               Gender
             </label>
             <select
-              defaultValue="Female"
+              name="gender"
+              value={patient.gender}
+              onChange={handleChange}
               className="w-full border rounded-lg p-3"
+              required
             >
               <option>Male</option>
               <option>Female</option>
@@ -60,8 +221,11 @@ const EditInfo = () => {
             </label>
             <input
               type="text"
-              defaultValue="91234567"
+              name="phone"
+              value={patient.phone}
+              onChange={handleChange}
               className="w-full border rounded-lg p-3"
+              placeholder="Enter phone number"
             />
           </div>
 
@@ -71,8 +235,11 @@ const EditInfo = () => {
             </label>
             <input
               type="email"
-              defaultValue="sarah@gmail.com"
+              name="email"
+              value={patient.email}
+              onChange={handleChange}
               className="w-full border rounded-lg p-3"
+              placeholder="Enter email address"
             />
           </div>
 
@@ -81,9 +248,12 @@ const EditInfo = () => {
               Medical Notes
             </label>
             <textarea
+              name="medical_notes"
+              value={patient.medical_notes}
+              onChange={handleChange}
               rows="4"
-              defaultValue="Previous breast examination completed. Follow-up mammogram recommended."
               className="w-full border rounded-lg p-3"
+              placeholder="Enter any medical notes"
             />
           </div>
 
