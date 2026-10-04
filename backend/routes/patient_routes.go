@@ -18,4 +18,6 @@ func PatientRoutes(router *gin.Engine, db *pgxpool.Pool) {
 	router.PUT("/patients/:id", controllers.UpdatePatient(db))
 
 	router.DELETE("/patients/:id", controllers.DeletePatient(db))
+
+	router.POST("/detect", controllers.DetectBreastCancer())
 }
