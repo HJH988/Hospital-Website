@@ -1,6 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const BreastCancer = () => {
+  const [image, setImage] = useState(null)
+  const [preview, setPreview] = useState(null)
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0]
+
+    if (!file) return
+
+    setImage(file)
+    setPreview(URL.createObjectURL(file))
+  }
+
   return (
     <div className="flex-1 p-6 bg-gray-100 min-h-screen">
 
@@ -18,11 +30,34 @@ const BreastCancer = () => {
             Mammogram
           </h2>
 
-          <div className="bg-gray-300 rounded-xl h-96 flex items-center justify-center cursor-pointer hover:bg-gray-400 transition">
-            <p className="text-xl font-semibold">
-              Drag & Drop Image Here
-            </p>
-          </div>
+          <label className="bg-gray-300 rounded-xl h-96 flex items-center justify-center cursor-pointer hover:bg-gray-400 transition overflow-hidden">
+
+            {preview ? (
+              <img
+                src={preview}
+                alt="Selected mammogram"
+                className="w-full h-full object-contain"
+              />
+            ) : (
+              <div className="text-center">
+                <p className="text-xl font-semibold">
+                  Click to Upload Image
+                </p>
+
+                <p className="text-gray-600 mt-2">
+                  Select a mammogram image
+                </p>
+              </div>
+            )}
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
+            />
+
+          </label>
         </div>
 
         {/* Result Image Section */}
@@ -31,10 +66,12 @@ const BreastCancer = () => {
             Mammogram Results
           </h2>
 
-          <div className="bg-gray-300 rounded-xl h-96 flex items-center justify-center">
+          <div className="bg-gray-300 rounded-xl h-96 flex items-center justify-center overflow-hidden">
+
             <p className="text-gray-600">
               Detection Output
             </p>
+
           </div>
         </div>
 
@@ -51,18 +88,20 @@ const BreastCancer = () => {
 
           <p className="text-lg">
             <strong>Result:</strong>{' '}
-            <span className="text-red-600 font-bold">
-              Malignant
+            <span className="text-gray-500 font-bold">
+              Not detected yet
             </span>
           </p>
 
           <p className="text-lg">
-            <strong>Confidence:</strong> 97%
+            <strong>Confidence:</strong> -
           </p>
 
         </div>
 
-        <button className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition">
+        <button
+          className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition"
+        >
           Run Detection
         </button>
 
