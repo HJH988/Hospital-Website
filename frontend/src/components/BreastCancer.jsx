@@ -13,6 +13,28 @@ const BreastCancer = () => {
     setPreview(URL.createObjectURL(file))
   }
 
+  const handleDetection = async () => {
+    if (!image) {
+      alert('Please upload an image first.')
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('image', image)
+
+    try {
+      const response = await fetch( 'http://localhost:3000/detect', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const data = await response.json()
+      console.log('Detection Result:', data)
+    } catch (error) {
+      console.error('Error occurred during detection:', error)
+    }
+  }
+
   return (
     <div className="flex-1 p-6 bg-gray-100 min-h-screen">
 
@@ -100,6 +122,7 @@ const BreastCancer = () => {
         </div>
 
         <button
+          onClick={handleDetection}
           className="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition"
         >
           Run Detection
