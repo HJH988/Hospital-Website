@@ -46,5 +46,7 @@ func main() {
 		})
 	})
 
+	router.Static("/uploads", "./uploads")
+
 	router.Run(":3000")
 }
