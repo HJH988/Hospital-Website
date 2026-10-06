@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 const PatientList = () => {
 
   const [patients, setPatients] = useState([])
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     fetch('http://localhost:3000/patients')
@@ -17,6 +18,10 @@ const PatientList = () => {
         console.error('Error fetching patients:', error)
       })
   }, [])
+
+  const filteredPatients = patients.filter((patient) =>
+    patient.name.toLowerCase().includes(search.toLowerCase())
+  )
 
   const handleDelete = async (id) => {
 
@@ -82,6 +87,8 @@ const PatientList = () => {
         <input
           type="text"
           placeholder="Search patient by name..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
@@ -102,7 +109,7 @@ const PatientList = () => {
           </thead>
 
           <tbody>
-            {patients.map((patient) => (
+            {filteredPatients.map((patient) => (
               <tr key={patient.id} className="border-t">
                 <td className="p-4">{patient.name}</td>
                 <td className="p-4">{patient.age}</td>
