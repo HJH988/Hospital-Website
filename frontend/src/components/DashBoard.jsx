@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
 const DashBoard = () => {
+  
+  const [totalPatients, setTotalPatients] = useState(0)
+
+  useEffect(() => {
+    fetch('http://localhost:3000/patients')
+      .then(response => response.json())
+      .then(data => {
+        setTotalPatients(data.length)
+      })
+      .catch(error => {
+        console.error('Error fetching patients:', error)
+      })
+  }, [])
+
   return (
     <div className="flex-1 p-6 bg-gray-100 min-h-screen">
 
@@ -27,7 +41,7 @@ const DashBoard = () => {
           </h2>
 
           <p className="text-3xl font-bold mt-2">
-            245
+            {totalPatients}
           </p>
 
           <p className="text-sm text-gray-500 mt-2">
