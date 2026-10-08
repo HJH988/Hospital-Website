@@ -3,18 +3,30 @@ import { Link } from 'react-router-dom'
 
 const DashBoard = () => {
   
+  const [patients, setPatients] = useState([])
   const [totalPatients, setTotalPatients] = useState(0)
 
   useEffect(() => {
     fetch('http://localhost:3000/patients')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch patients')
+        }
+
+        return response.json()
+      })
       .then(data => {
+        console.log('Dashboard patients:', data)
+
+        setPatients(data)
         setTotalPatients(data.length)
       })
       .catch(error => {
         console.error('Error fetching patients:', error)
       })
   }, [])
+
+  const recentPatients = patients.slice(-3).reverse()
 
   return (
     <div className="flex-1 p-6 bg-gray-100 min-h-screen">
@@ -123,59 +135,47 @@ const DashBoard = () => {
           </div>
 
 
-          <div className="space-y-4">
+<div className="space-y-4">
 
-            <div className="flex justify-between items-center border-b pb-3">
-              <div>
-                <p className="font-medium">
-                  Sarah Lee
-                </p>
+  {recentPatients.length === 0 ? (
 
-                <p className="text-sm text-gray-500">
-                  Age 45
-                </p>
-              </div>
+    <p className="text-gray-500">
+      No patients available.
+    </p>
 
-              <span className="text-yellow-600 text-sm font-medium">
-                Pending
-              </span>
-            </div>
+  ) : (
 
+    recentPatients.map((patient) => (
 
-            <div className="flex justify-between items-center border-b pb-3">
-              <div>
-                <p className="font-medium">
-                  Emma Tan
-                </p>
+      <div
+        key={patient.id}
+        className="flex justify-between items-center border-b pb-3"
+      >
 
-                <p className="text-sm text-gray-500">
-                  Age 38
-                </p>
-              </div>
+        <div>
+          <p className="font-medium">
+            {patient.name}
+          </p>
 
-              <span className="text-green-600 text-sm font-medium">
-                Reviewed
-              </span>
-            </div>
+          <p className="text-sm text-gray-500">
+            Age {patient.age}
+          </p>
+        </div>
 
+        <Link
+          to={`/patientinfo/${patient.id}`}
+          className="text-blue-600 hover:text-blue-800 text-sm"
+        >
+          View
+        </Link>
 
-            <div className="flex justify-between items-center">
-              <div>
-                <p className="font-medium">
-                  Jane Lim
-                </p>
+      </div>
 
-                <p className="text-sm text-gray-500">
-                  Age 51
-                </p>
-              </div>
+    ))
 
-              <span className="text-green-600 text-sm font-medium">
-                Reviewed
-              </span>
-            </div>
+  )}
 
-          </div>
+</div>
 
         </div>
 
