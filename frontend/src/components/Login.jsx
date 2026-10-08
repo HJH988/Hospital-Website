@@ -1,6 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password
+        })
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        // Login successful
+        console.log('Login successful', data)
+        navigate('/')
+      } else {
+        // Login failed
+        console.error('Login failed', data.error)
+      }
+    } catch (error) {
+      console.error('Error during login:', error)
+    }
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
 
@@ -21,6 +57,8 @@ const Login = () => {
           <input
             type="text"
             placeholder="Enter your username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -34,13 +72,21 @@ const Login = () => {
           <input
             type="password"
             placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
+        {error && (
+          <p className="text-red-500 text-sm mb-4">
+             {error}
+          </p>
+        )}
+
         {/* Login Button */}
         <button
-          onclick={() => {"/Dashboard"}}
+          onClick={handleLogin}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition"
         >
           Login

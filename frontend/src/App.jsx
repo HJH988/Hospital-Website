@@ -5,14 +5,6 @@ import {
   RouterProvider, 
   createRoutesFromElements } from 'react-router-dom'
 
-// import Sidebar from './components/Sidebar'
-// import Login from './components/login'
-// import DashBoard from './components/DashBoard'
-// import PatientInfo from './components/PatientInfo'
-// import AddPatient from './components/AddPatient'
-// import EditInfo from './components/EditInfo'
-// import PatientList from './components/PatientList'
-// import BreastCancer from './components/BreastCancer'
 import MainLayout from './layouts/MainLayout'
 import LoginPage from './pages/LoginPage'
 import DashBoardPage from './pages/DashBoardPage'
@@ -25,15 +17,19 @@ import EditInfoPage from './pages/EditInfoPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<MainLayout />} >
-      <Route index element={<DashBoardPage />} />
-      <Route path='/patientslist' element={<PatientListPage />} />
-      <Route path='/addpatient' element={<AddPatientPage />} />
-      <Route path='/breastcancer' element={<BreastCancerPage />} />
-      <Route path='/patientinfo/:id' element={<PatientInfoPage />} />
-      <Route path='/editinfo/:id' element={<EditInfoPage />} />
-    </Route>
+    <>
 
+      <Route path='/login' element={<LoginPage />} />
+
+      <Route path='/' element={<MainLayout />} >
+        <Route index element={<DashBoardPage />} />
+        <Route path='/patientslist' element={<PatientListPage />} />
+        <Route path='/addpatient' element={<AddPatientPage />} />
+        <Route path='/breastcancer' element={<BreastCancerPage />} />
+        <Route path='/patientinfo/:id' element={<PatientInfoPage />} />
+        <Route path='/editinfo/:id' element={<EditInfoPage />} />
+      </Route>
+    </>
   )
 );
 

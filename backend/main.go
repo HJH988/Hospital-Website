@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 
+	"github.com/example/crud-app/controllers"
 	"github.com/example/crud-app/database"
 	"github.com/example/crud-app/routes"
 )
@@ -38,6 +39,7 @@ func main() {
 	}))
 
 	routes.PatientRoutes(router, db)
+	router.POST("/login", controllers.Login(db))
 
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
