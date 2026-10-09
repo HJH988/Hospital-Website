@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true)
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn')
+    navigate('/login', { replace: true })
+  }
 
   return (
     <div className="flex">
@@ -81,7 +87,10 @@ const Sidebar = () => {
         {/* Logout */}
         {isOpen && (
           <div className="p-4 border-t border-gray-700">
-            <button className="w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg transition">
+            <button 
+            onClick={handleLogout} 
+            className="w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg transition"
+            >
               Logout
             </button>
           </div>

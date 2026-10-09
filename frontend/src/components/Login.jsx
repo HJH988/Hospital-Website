@@ -27,6 +27,9 @@ const Login = () => {
       if (response.ok) {
         // Login successful
         console.log('Login successful', data)
+
+        localStorage.setItem('isLoggedIn', 'true')
+
         navigate('/')
       } else {
         // Login failed
