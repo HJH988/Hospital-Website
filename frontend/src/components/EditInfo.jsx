@@ -18,11 +18,17 @@ const EditInfo = () => {
 
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+useEffect(() => {
+    // 1. Get the JWT token from localStorage
+    const token = localStorage.getItem('token')
 
-    fetch(`http://localhost:3000/patients/${id}`)
+    fetch(`http://localhost:3000/patients/${id}`, {
+      headers: {
+        // 2. Add Authorization header
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(response => {
-
         if (!response.ok) {
           throw new Error('Patient not found')
         }
@@ -30,7 +36,6 @@ const EditInfo = () => {
         return response.json()
       })
       .then(data => {
-
         console.log('Patient received:', data)
 
         setPatient({
@@ -45,11 +50,8 @@ const EditInfo = () => {
         setLoading(false)
       })
       .catch(error => {
-
         console.error('Error fetching patient:', error)
-
         setError('Failed to load patient information')
-
         setLoading(false)
       })
 
@@ -64,23 +66,24 @@ const EditInfo = () => {
     })
   }
 
- const handleSubmit = async (event) => {
-
+const handleSubmit = async (event) => {
     event.preventDefault()
 
     setError('')
 
     try {
+      // 1. Get the JWT token from localStorage
+      const token = localStorage.getItem('token')
 
       const response = await fetch(
         `http://localhost:3000/patients/${id}`,
         {
           method: 'PUT',
-
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            // 2. Add Authorization header
+            Authorization: `Bearer ${token}`,
           },
-
           body: JSON.stringify({
             ...patient,
             age: Number(patient.age)
@@ -91,9 +94,7 @@ const EditInfo = () => {
       const data = await response.json()
 
       if (!response.ok) {
-
         setError(data.error || 'Failed to update patient')
-
         return
       }
 
@@ -103,9 +104,7 @@ const EditInfo = () => {
       navigate('/patientslist')
 
     } catch (error) {
-
       console.error('Error updating patient:', error)
-
       setError('Could not connect to the server')
     }
   }

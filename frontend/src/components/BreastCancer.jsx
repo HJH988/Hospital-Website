@@ -26,7 +26,7 @@ const BreastCancerPage = () => {
   }
 
 
-  const handleDetection = async () => {
+const handleDetection = async () => {
 
     if (!image) {
       alert('Please select an image first')
@@ -43,11 +43,17 @@ const BreastCancerPage = () => {
     setLoading(true)
 
     try {
+      // 1. Get the JWT token from localStorage
+      const token = localStorage.getItem('token')
 
       const response = await fetch(
         'http://localhost:3000/detect',
         {
           method: 'POST',
+          headers: {
+            // 2. Add the Authorization header (leave Content-Type out so FormData handles it)
+            Authorization: `Bearer ${token}`,
+          },
           body: formData
         }
       )
