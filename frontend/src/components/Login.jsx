@@ -28,9 +28,10 @@ const Login = () => {
         // Login successful
         console.log('Login successful', data)
 
-        localStorage.setItem('isLoggedIn', 'true')
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('username', data.user.username)
 
-        navigate('/')
+        navigate('/', { replace: true })
       } else {
         // Login failed
         console.error('Login failed', data.error)

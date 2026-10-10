@@ -8,15 +8,31 @@ const PatientList = () => {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    fetch('http://localhost:3000/patients')
-      .then(response => response.json())
-      .then(data => {
-        console.log("Patients received:", data)
+    const fetchPatients = async () => {
+      try {
+        const token = localStorage.getItem('token')
+
+        const response = await fetch('http://localhost:3000/patients', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to fetch patients')
+        }
+
+        console.log('Patients received:', data)
         setPatients(data)
-      })
-      .catch(error => {
+
+      } catch (error) {
         console.error('Error fetching patients:', error)
-      })
+      }
+    }
+
+    fetchPatients()
   }, [])
 
   const filteredPatients = patients.filter((patient) =>
@@ -35,10 +51,15 @@ const PatientList = () => {
 
   try {
 
+    const token = localStorage.getItem('token')
+
     const response = await fetch(
       `http://localhost:3000/patients/${id}`,
       {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     )
 

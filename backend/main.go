@@ -9,6 +9,7 @@ import (
 
 	"github.com/example/crud-app/controllers"
 	"github.com/example/crud-app/database"
+	"github.com/example/crud-app/middleware"
 	"github.com/example/crud-app/routes"
 )
 
@@ -38,8 +39,15 @@ func main() {
 		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
 	}))
 
-	routes.PatientRoutes(router, db)
+	// Public endpoint: users must be able to log in.
 	router.POST("/login", controllers.Login(db))
+
+	// Protected endpoints: JWT required.
+	protected := router.Group("/")
+	protected.Use(middleware.RequireAuth())
+
+	// Register your existing patient routes on this protected group.
+	routes.PatientRoutes(protected, db)
 
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{

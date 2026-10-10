@@ -4,18 +4,20 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"golang.org/x/crypto/bcrypt"
+
+	"github.com/example/crud-app/auth"
 )
 
 func Login(db *pgxpool.Pool) gin.HandlerFunc {
 	return func(c *gin.Context) {
-
 		var loginData struct {
 			Username string `json:"username"`
 			Password string `json:"password"`
 		}
 
-		// Get username and password from React
 		if err := c.ShouldBindJSON(&loginData); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": "Invalid request",
@@ -25,14 +27,34 @@ func Login(db *pgxpool.Pool) gin.HandlerFunc {
 
 		var userID int
 		var username string
-		var password string
+		var hashedPassword string
 
-		// Find user in database
 		err := db.QueryRow(
-			c,
-			"SELECT id, username, password FROM users WHERE username = $1",
+			c.Request.Context(),
+			`SELECT id, username, password
+			 FROM users
+			 WHERE username = $1`,
 			loginData.Username,
-		).Scan(&userID, &username, &password)
+		).Scan(&userID, &username, &hashedPassword)
+
+		if err != nil {
+			if err == pgx.ErrNoRows {
+				c.JSON(http.StatusUnauthorized, gin.H{
+					"error": "Invalid username or password",
+				})
+				return
+			}
+
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Unable to authenticate user",
+			})
+			return
+		}
+
+		err = bcrypt.CompareHashAndPassword(
+			[]byte(hashedPassword),
+			[]byte(loginData.Password),
+		)
 
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{
@@ -41,19 +63,22 @@ func Login(db *pgxpool.Pool) gin.HandlerFunc {
 			return
 		}
 
-		// Check password
-		if loginData.Password != password {
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"error": "Invalid username or password",
+		token, err := auth.GenerateToken(userID, username)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Unable to generate authentication token",
 			})
 			return
 		}
 
-		// Login successful
 		c.JSON(http.StatusOK, gin.H{
-			"message":  "Login successful",
-			"user_id":  userID,
-			"username": username,
+			"message": "Login successful",
+			"token":   token,
+			"user": gin.H{
+				"id":       userID,
+				"username": username,
+			},
 		})
 	}
 }

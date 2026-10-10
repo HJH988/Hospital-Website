@@ -7,7 +7,7 @@ import (
 	"github.com/example/crud-app/controllers"
 )
 
-func PatientRoutes(router *gin.Engine, db *pgxpool.Pool) {
+func PatientRoutes(router gin.IRoutes, db *pgxpool.Pool) {
 
 	router.GET("/patients", controllers.GetPatients(db))
 
