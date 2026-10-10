@@ -26,39 +26,44 @@ const AddPatient = () => {
   }
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+      event.preventDefault()
 
-    setError('')
+      setError('')
 
-    try {
-      const response = await fetch('http://localhost:3000/patients', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          ...patient,
-          age: Number(patient.age)
+      try {
+        // 1. Get the JWT token from localStorage
+        const token = localStorage.getItem('token')
+
+        const response = await fetch('http://localhost:3000/patients', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // 2. Add the Authorization header
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            ...patient,
+            age: Number(patient.age)
+          })
         })
-      })
 
-      const data = await response.json()
+        const data = await response.json()
 
-      if (!response.ok) {
-        setError(data.error || 'Failed to create patient')
-        return
+        if (!response.ok) {
+          setError(data.error || 'Failed to create patient')
+          return
+        }
+
+        console.log('Patient created:', data)
+
+        // Go back to patient list
+        navigate('/patientslist')
+
+      } catch (error) {
+        console.error('Error creating patient:', error)
+        setError('Could not connect to the server')
       }
-
-      console.log('Patient created:', data)
-
-      // Go back to patient list
-      navigate('/patientslist')
-
-    } catch (error) {
-      console.error('Error creating patient:', error)
-      setError('Could not connect to the server')
     }
-  }
 
   return (
     <div className="flex-1 p-6 bg-gray-100 min-h-screen">
