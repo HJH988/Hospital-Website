@@ -7,23 +7,33 @@ const DashBoard = () => {
   const [totalPatients, setTotalPatients] = useState(0)
 
   useEffect(() => {
-    fetch('http://localhost:3000/patients')
-      .then(response => {
+    const fetchPatients = async () => {
+      try {
+        // Get the JWT token saved during login
+        const token = localStorage.getItem('token')
+
+        const response = await fetch('http://localhost:3000/patients', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+        const data = await response.json()
+
         if (!response.ok) {
-          throw new Error('Failed to fetch patients')
+          throw new Error(data.error || 'Failed to fetch patients')
         }
 
-        return response.json()
-      })
-      .then(data => {
         console.log('Dashboard patients:', data)
 
         setPatients(data)
         setTotalPatients(data.length)
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error fetching patients:', error)
-      })
+      }
+    }
+
+    fetchPatients()
   }, [])
 
   const recentPatients = patients.slice(-3).reverse()
