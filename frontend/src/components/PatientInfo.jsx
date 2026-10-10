@@ -9,26 +9,32 @@ const PatientInformation = () => {
   const [error, setError] = useState('')
 
   useEffect(() => {
+      // 1. Get the JWT token from localStorage
+      const token = localStorage.getItem('token')
 
-    fetch(`http://localhost:3000/patients/${id}`)
-      .then(response => {
-
-        if (!response.ok) {
-          throw new Error('Patient not found')
-        }
-
-        return response.json()
+      fetch(`http://localhost:3000/patients/${id}`, {
+        headers: {
+          // 2. Add the Authorization header
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then(data => {
-        console.log('Patient received:', data)
-        setPatient(data)
-      })
-      .catch(error => {
-        console.error('Error fetching patient:', error)
-        setError('Failed to load patient information')
-      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Patient not found')
+          }
 
-  }, [id])
+          return response.json()
+        })
+        .then(data => {
+          console.log('Patient received:', data)
+          setPatient(data)
+        })
+        .catch(error => {
+          console.error('Error fetching patient:', error)
+          setError('Failed to load patient information')
+        })
+
+    }, [id])
 
 
   // Loading state
