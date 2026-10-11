@@ -7,39 +7,38 @@ const Login = () => {
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
-  const handleLogin = async (e) => {
-    e.preventDefault()
+const handleLogin = async (e) => {
+  e.preventDefault()
+  setError('')
 
-    try {
-      const response = await fetch('http://localhost:3000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password
-        })
-      })
+  try {
+    const response = await fetch('http://localhost:3000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    })
 
-      const data = await response.json()
+    const data = await response.json()
 
-      if (response.ok) {
-        // Login successful
-        console.log('Login successful', data)
-
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('username', data.user.username)
-
-        navigate('/', { replace: true })
-      } else {
-        // Login failed
-        console.error('Login failed', data.error)
-      }
-    } catch (error) {
-      console.error('Error during login:', error)
+    if (!response.ok) {
+      setError(data.error || 'Login failed. Please try again.')
+      return
     }
+
+    localStorage.setItem('token', data.token)
+    localStorage.setItem('username', data.user.username)
+
+    navigate('/', { replace: true })
+  } catch (error) {
+    setError('Unable to connect to the server. Please try again.')
+    console.error('Login error:', error)
   }
+}
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
