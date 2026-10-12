@@ -77,10 +77,10 @@ const Sidebar = () => {
 
             <li>
               <Link
-                href="#"
+                to="/systemtest"
                 className="block px-4 py-3 rounded-lg hover:bg-gray-800 transition"
               >
-                Settings
+                Testing
               </Link>
             </li>
           </ul>

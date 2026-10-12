@@ -15,6 +15,7 @@ import BreastCancerPage from './pages/BreastCancerPage'
 import PatientInfoPage from './pages/PatientInfoPage'
 import EditInfoPage from './pages/EditInfoPage'
 import ProtectedRoute from './components/ProtectedRoute'
+import SystemTestPage from './pages/SystemTestPage'
 
 
 const router = createBrowserRouter(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
           <Route path='/breastcancer' element={<BreastCancerPage />} />
           <Route path='/patientinfo/:id' element={<PatientInfoPage />} />
           <Route path='/editinfo/:id' element={<EditInfoPage />} />
+          <Route path="systemtest" element={<SystemTestPage />} />
         </Route>
       </Route>
     </>
