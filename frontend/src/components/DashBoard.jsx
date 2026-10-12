@@ -5,6 +5,8 @@ const DashBoard = () => {
   
   const [patients, setPatients] = useState([])
   const [totalPatients, setTotalPatients] = useState(0)
+  const [malePatients, setMalePatients] = useState(0)
+  const [femalePatients, setFemalePatients] = useState(0)
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -28,6 +30,18 @@ const DashBoard = () => {
 
         setPatients(data)
         setTotalPatients(data.length)
+
+        setMalePatients(
+          data.filter(
+            patient => patient.gender?.toLowerCase() === 'male'
+          ).length
+        )
+
+        setFemalePatients(
+          data.filter(
+            patient => patient.gender?.toLowerCase() === 'female'
+          ).length
+        )
       } catch (error) {
         console.error('Error fetching patients:', error)
       }
@@ -54,7 +68,7 @@ const DashBoard = () => {
 
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
 
         {/* Total Patients */}
         <div className="bg-white p-6 rounded-xl shadow">
@@ -72,50 +86,34 @@ const DashBoard = () => {
         </div>
 
 
-        {/* Total Scans */}
+        {/* Male Patients */}
         <div className="bg-white p-6 rounded-xl shadow">
           <h2 className="text-gray-500 text-sm">
-            Total Scans
+            Male Patients
           </h2>
 
           <p className="text-3xl font-bold mt-2">
-            89
+            {malePatients}
           </p>
 
           <p className="text-sm text-gray-500 mt-2">
-            AI scans performed
+            Registered male patients
           </p>
         </div>
 
 
-        {/* Detections */}
+        {/* Female Patients */}
         <div className="bg-white p-6 rounded-xl shadow">
           <h2 className="text-gray-500 text-sm">
-            Detections
+            Female Patients
           </h2>
 
           <p className="text-3xl font-bold mt-2">
-            12
+            {femalePatients}
           </p>
 
           <p className="text-sm text-gray-500 mt-2">
-            Requires attention
-          </p>
-        </div>
-
-
-        {/* Pending Reviews */}
-        <div className="bg-white p-6 rounded-xl shadow">
-          <h2 className="text-gray-500 text-sm">
-            Pending Reviews
-          </h2>
-
-          <p className="text-3xl font-bold mt-2">
-            4
-          </p>
-
-          <p className="text-sm text-gray-500 mt-2">
-            Awaiting review
+            Registered female patients
           </p>
         </div>
 
