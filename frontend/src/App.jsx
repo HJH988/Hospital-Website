@@ -21,8 +21,10 @@ import SystemTestPage from './pages/SystemTestPage'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-
+      // Public routes
       <Route path='/login' element={<LoginPage />} />
+
+      // Protected routes
       <Route element={<ProtectedRoute />}>
         <Route path='/' element={<MainLayout />} >
           <Route index element={<DashBoardPage />} />

@@ -21,6 +21,8 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	// Connect to the database
+
 	db, err := database.Connect()
 
 	if err != nil {
@@ -28,6 +30,8 @@ func main() {
 	}
 
 	defer db.Close()
+
+	//
 
 	router := gin.Default()
 
@@ -38,6 +42,8 @@ func main() {
 		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
 	}))
+
+	// Reegister routes here
 
 	// Public endpoint: users must be able to log in.
 	router.POST("/login", controllers.Login(db))
@@ -57,6 +63,10 @@ func main() {
 	})
 
 	router.Static("/uploads", "./uploads")
+
+	//
+
+	// Start the server on port 3000
 
 	router.Run(":3000")
 }
