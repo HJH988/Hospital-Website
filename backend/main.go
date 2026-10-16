@@ -33,19 +33,20 @@ func main() {
 
 	defer db.Close()
 
-	//
+	// Initialize Gin router and configure CORS
 
 	router := gin.Default()
 
 	router.SetTrustedProxies(nil)
 
 	router.Use(cors.New(cors.Config{
+		// Allow requests from the frontend application running on localhost:5173
 		AllowOrigins: []string{"http://localhost:5173"},
 		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders: []string{"Origin", "Content-Type", "Authorization"},
 	}))
 
-	// Reegister routes here
+	// Register routes here
 
 	// Public endpoint: users must be able to log in.
 	router.POST("/login", controllers.Login(db))
