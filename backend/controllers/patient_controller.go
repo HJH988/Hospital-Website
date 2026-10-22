@@ -12,12 +12,14 @@ import (
 
 func GetPatients(db *pgxpool.Pool) gin.HandlerFunc {
 	return func(c *gin.Context) {
-
+		
+		// Query the database for all patients
 		rows, err := db.Query(
 			context.Background(),
 			"SELECT id, name, age, gender, phone, email, medical_notes FROM patients",
 		)
 
+		// Handle any errors that occur during the query
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"error": "Failed to get patients",
