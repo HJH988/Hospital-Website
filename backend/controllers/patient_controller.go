@@ -97,7 +97,7 @@ func GetPatient(db *pgxpool.Pool) gin.HandlerFunc {
 
 func CreatePatient(db *pgxpool.Pool) gin.HandlerFunc {
 	return func(c *gin.Context) {
-
+		// Create a new patient variable to hold the incoming data
 		var patient models.Patient
 
 		err := c.ShouldBindJSON(&patient)
@@ -108,7 +108,7 @@ func CreatePatient(db *pgxpool.Pool) gin.HandlerFunc {
 			})
 			return
 		}
-
+		// Insert the new patient into the database and return the generated ID
 		err = db.QueryRow(
 			context.Background(),
 			`INSERT INTO patients
