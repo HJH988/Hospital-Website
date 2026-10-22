@@ -137,8 +137,9 @@ func CreatePatient(db *pgxpool.Pool) gin.HandlerFunc {
 
 func UpdatePatient(db *pgxpool.Pool) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// Get the patient ID from the URL parameter
 		id := c.Param("id")
-
+		// Create a new patient variable to hold the incoming data
 		var patient models.Patient
 
 		err := c.ShouldBindJSON(&patient)
@@ -150,6 +151,7 @@ func UpdatePatient(db *pgxpool.Pool) gin.HandlerFunc {
 			return
 		}
 
+		// Update the patient in the database and return the updated data
 		err = db.QueryRow(
 			context.Background(),
 			`UPDATE patients
