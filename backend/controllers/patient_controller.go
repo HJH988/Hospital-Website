@@ -193,28 +193,29 @@ func UpdatePatient(db *pgxpool.Pool) gin.HandlerFunc {
 
 func DeletePatient(db *pgxpool.Pool) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// Get the patient ID from the URL parameter
 		id := c.Param("id")
-
+		// Delete the patient from the database
 		result, err := db.Exec(
 			context.Background(),
 			"DELETE FROM patients WHERE id = $1",
 			id,
 		)
-
+		// Handle any errors that occur during the deletion
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"error": "Failed to delete patient",
 			})
 			return
 		}
-
+		// Check if any rows were affected (i.e., if the patient was found and deleted)
 		if result.RowsAffected() == 0 {
 			c.JSON(http.StatusNotFound, gin.H{
 				"error": "Patient not found",
 			})
 			return
 		}
-
+		// Return a success message if the patient was deleted successfully
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Patient deleted successfully",
 		})
