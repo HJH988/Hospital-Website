@@ -51,21 +51,23 @@ func GetPatients(db *pgxpool.Pool) gin.HandlerFunc {
 				})
 				return
 			}
-
+			// adds the current patient into the slice
 			patients = append(patients, patient)
 		}
-
+		// return the patient's data to react
 		c.JSON(http.StatusOK, patients)
 	}
 }
 
 func GetPatient(db *pgxpool.Pool) gin.HandlerFunc {
 	return func(c *gin.Context) {
-
+		// Get the patient ID from the URL parameter
 		id := c.Param("id")
 
+		// One variable cause we are getting one patient data only
 		var patient models.Patient
 
+		// Query the database for the patient with the given ID
 		err := db.QueryRow(
 			context.Background(),
 			`SELECT id, name, age, gender, phone, email, medical_notes
