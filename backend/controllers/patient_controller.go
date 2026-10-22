@@ -26,11 +26,11 @@ func GetPatients(db *pgxpool.Pool) gin.HandlerFunc {
 			})
 			return
 		}
-
+		// Ensure that the rows are closed after we are done with them
 		defer rows.Close()
-
+		// Create a slice to hold the patients
 		var patients []models.Patient
-
+		// Iterate over the rows returned by the query
 		for rows.Next() {
 
 			var patient models.Patient
