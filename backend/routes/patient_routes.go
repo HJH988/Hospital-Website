@@ -7,7 +7,10 @@ import (
 	"github.com/example/crud-app/controllers"
 )
 
+// function is used to to register routes
 func PatientRoutes(router gin.IRoutes, db *pgxpool.Pool) {
+
+	// Define patient routes
 
 	router.GET("/patients", controllers.GetPatients(db))
 
