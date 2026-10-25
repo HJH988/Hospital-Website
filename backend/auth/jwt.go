@@ -14,6 +14,8 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
+// GenerateToken generates a JWT token for the given user ID and username.
+
 func GenerateToken(userID int, username string) (string, error) {
 	secret := os.Getenv("JWT_SECRET")
 
@@ -35,6 +37,8 @@ func GenerateToken(userID int, username string) (string, error) {
 
 	return token.SignedString([]byte(secret))
 }
+
+// ValidateToken validates the given JWT token string and returns the claims if valid.
 
 func ValidateToken(tokenString string) (*Claims, error) {
 	secret := os.Getenv("JWT_SECRET")
