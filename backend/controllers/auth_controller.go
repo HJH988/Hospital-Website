@@ -11,6 +11,7 @@ import (
 	"github.com/example/crud-app/auth"
 )
 
+// Login handles user login requests, authenticates the user, and returns a JWT token if successful.
 func Login(db *pgxpool.Pool) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var loginData struct {
