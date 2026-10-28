@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   // State variables for username, password, and error message
+  // variable, update, variable at the start
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  // hook to navigate to another page after successful login
   const navigate = useNavigate()
 
+// Function to handle login
 const handleLogin = async (e) => {
   e.preventDefault()
   setError('')
