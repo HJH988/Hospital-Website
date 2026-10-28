@@ -12,9 +12,11 @@ const Login = () => {
 
 // Function to handle login
 const handleLogin = async (e) => {
+  // Prevent the default form submission behavior
   e.preventDefault()
+  // clear any previous error messages
   setError('')
-
+  // Send a POST request to the backend with the username and password
   try {
     const response = await fetch('http://localhost:3000/login', {
       method: 'POST',
