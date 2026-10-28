@@ -28,14 +28,14 @@ const handleLogin = async (e) => {
         password,
       }),
     })
-
+    // Parse the response as JSON
     const data = await response.json()
-
+    // If the response is not OK, set the error message and return
     if (!response.ok) {
       setError(data.error || 'Login failed. Please try again.')
       return
     }
-
+    // If login is successful, store the token and username in localStorage
     localStorage.setItem('token', data.token)
     localStorage.setItem('username', data.user.username)
 
