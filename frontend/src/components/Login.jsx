@@ -38,14 +38,15 @@ const handleLogin = async (e) => {
     // If login is successful, store the token and username in localStorage
     localStorage.setItem('token', data.token)
     localStorage.setItem('username', data.user.username)
-
+    // Navigate to the home page and replace the current entry in the history stack
     navigate('/', { replace: true })
-  } catch (error) {
+  } // Catch any errors that occur during the fetch request 
+    catch (error) {
     setError('Unable to connect to the server. Please try again.')
     console.error('Login error:', error)
   }
 }
-
+  // Render the login form
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
 
