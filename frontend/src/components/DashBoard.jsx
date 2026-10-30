@@ -2,12 +2,12 @@ import React, { useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
 const DashBoard = () => {
-  
+  // State variables to hold patient data and statistics
   const [patients, setPatients] = useState([])
   const [totalPatients, setTotalPatients] = useState(0)
   const [malePatients, setMalePatients] = useState(0)
   const [femalePatients, setFemalePatients] = useState(0)
-
+  // useEffect hook to fetch patient data when the component mounts
   useEffect(() => {
     const fetchPatients = async () => {
       try {
