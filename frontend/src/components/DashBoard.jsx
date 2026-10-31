@@ -9,28 +9,29 @@ const DashBoard = () => {
   const [femalePatients, setFemalePatients] = useState(0)
   // useEffect hook to fetch patient data when the component mounts
   useEffect(() => {
+    // Function to fetch patients from the backend API
     const fetchPatients = async () => {
       try {
         // Get the JWT token saved during login
         const token = localStorage.getItem('token')
-
+        // Make a GET request to the backend API to fetch patients
         const response = await fetch('http://localhost:3000/patients', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
-
+        // convert the response to JSON
         const data = await response.json()
-
+        // Check if the response is not OK (status code not in the range 200-299)
         if (!response.ok) {
           throw new Error(data.error || 'Failed to fetch patients')
         }
 
         console.log('Dashboard patients:', data)
-
+        // Saves the patient record
         setPatients(data)
         setTotalPatients(data.length)
-
+        // Count male and female patients based on the gender field
         setMalePatients(
           data.filter(
             patient => patient.gender?.toLowerCase() === 'male'
@@ -46,10 +47,10 @@ const DashBoard = () => {
         console.error('Error fetching patients:', error)
       }
     }
-
+    // Call the fetchPatients function to initiate the data fetching
     fetchPatients()
   }, [])
-
+  // Get the last three patients for the recent patients section
   const recentPatients = patients.slice(-3).reverse()
 
   return (
@@ -75,7 +76,7 @@ const DashBoard = () => {
           <h2 className="text-gray-500 text-sm">
             Total Patients
           </h2>
-
+          // Display the total number of patients
           <p className="text-3xl font-bold mt-2">
             {totalPatients}
           </p>
@@ -91,7 +92,7 @@ const DashBoard = () => {
           <h2 className="text-gray-500 text-sm">
             Male Patients
           </h2>
-
+          // Display the total number of male patients
           <p className="text-3xl font-bold mt-2">
             {malePatients}
           </p>
@@ -107,7 +108,7 @@ const DashBoard = () => {
           <h2 className="text-gray-500 text-sm">
             Female Patients
           </h2>
-
+          // Display the total number of female patients
           <p className="text-3xl font-bold mt-2">
             {femalePatients}
           </p>
@@ -142,9 +143,9 @@ const DashBoard = () => {
 
           </div>
 
-
+// Display the list of recent patients or a message if there are none
 <div className="space-y-4">
-
+  // Check if there are no recent patients
   {recentPatients.length === 0 ? (
 
     <p className="text-gray-500">
@@ -152,10 +153,11 @@ const DashBoard = () => {
     </p>
 
   ) : (
-
+    // Map through the recent patients and display their information
     recentPatients.map((patient) => (
 
       <div
+        // Use the patient's ID as a unique key for each element
         key={patient.id}
         className="flex justify-between items-center border-b pb-3"
       >
