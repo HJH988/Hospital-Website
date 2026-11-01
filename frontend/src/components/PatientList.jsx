@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 const PatientList = () => {
-
+  // State variables for patients and search query
   const [patients, setPatients] = useState([])
   const [search, setSearch] = useState('')
-
+  // Fetch patients from the backend when the component mounts
   useEffect(() => {
     const fetchPatients = async () => {
       try {
