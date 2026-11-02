@@ -4,27 +4,31 @@ import { useState, useEffect } from 'react'
 
 const PatientList = () => {
   // State variables for patients and search query
+  // patients store the patient records fetched from the backend
+  // search stores the current search query entered by the user
   const [patients, setPatients] = useState([])
   const [search, setSearch] = useState('')
   // Fetch patients from the backend when the component mounts
   useEffect(() => {
     const fetchPatients = async () => {
       try {
+        // Retrieve the token from local storage for authentication
         const token = localStorage.getItem('token')
-
+        // Make a GET request to the backend to fetch patient records
         const response = await fetch('http://localhost:3000/patients', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
-
+        // Parse the response as JSON
         const data = await response.json()
-
+        // Check if the response was successful
         if (!response.ok) {
           throw new Error(data.error || 'Failed to fetch patients')
         }
-
+        // Log the received patient data for debugging purposes
         console.log('Patients received:', data)
+        // Update the state with the fetched patient records
         setPatients(data)
 
       } catch (error) {
@@ -34,25 +38,25 @@ const PatientList = () => {
 
     fetchPatients()
   }, [])
-
+  // Filter patients based on the search query entered by the user
   const filteredPatients = patients.filter((patient) =>
     patient.name.toLowerCase().includes(search.toLowerCase())
   )
-
+  // Function to handle the deletion of a patient record
   const handleDelete = async (id) => {
-
+  // Confirm with the user before proceeding with the deletion
   const confirmDelete = window.confirm(
     'Are you sure you want to delete this patient?'
   )
-
+  // If the user cancels the deletion, exit the function
   if (!confirmDelete) {
     return
   }
-
+  // Proceed with the deletion if the user confirms
   try {
-
+    // Retrieve the token from local storage for authentication
     const token = localStorage.getItem('token')
-
+    // Make a DELETE request to the backend to delete the patient record
     const response = await fetch(
       `http://localhost:3000/patients/${id}`,
       {
@@ -62,9 +66,9 @@ const PatientList = () => {
         },
       }
     )
-
+    // Parse the response as JSON
     const data = await response.json()
-
+    // Check if the response was successful
     if (!response.ok) {
       console.error(data)
       return
@@ -83,7 +87,7 @@ const PatientList = () => {
 
   }
 }
-
+  // Render the component
   return (
     <div className="flex-1 p-6 bg-gray-100 min-h-screen">
 
@@ -97,7 +101,7 @@ const PatientList = () => {
             Manage patient records.
           </p>
         </div>
-
+        // Add Patient Button
         <Link to="/addpatient" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
           Add Patient
         </Link>
@@ -105,6 +109,7 @@ const PatientList = () => {
 
       {/* Search Bar */}
       <div className="bg-white rounded-xl shadow p-4 mb-6">
+        // Input field for searching patients by name
         <input
           type="text"
           placeholder="Search patient by name..."
