@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const AddPatient = () => {
-
+  // Initialize the navigate function from react-router-dom
   const navigate = useNavigate()
-
+  // Initialize the patient state with default values
   const [patient, setPatient] = useState({
     name: '',
     age: '',
@@ -13,19 +13,21 @@ const AddPatient = () => {
     email: '',
     medical_notes: ''
   })
-
+  // Initialize the error state to handle any errors during form submission
   const [error, setError] = useState('')
-
+  // Handle input changes and update the patient state accordingly
   const handleChange = (event) => {
+    // Destructure the name and value from the event target
     const { name, value } = event.target
-
+    // Update the patient state with the new value for the corresponding field
     setPatient({
       ...patient,
       [name]: value
     })
   }
-
+  // Handle form submission
   const handleSubmit = async (event) => {
+      // prevent brower from refreshing the page on form submission
       event.preventDefault()
 
       setError('')
