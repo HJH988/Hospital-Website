@@ -101,7 +101,7 @@ const PatientList = () => {
             Manage patient records.
           </p>
         </div>
-        // Add Patient Button
+        {/* Add Patient Button */}
         <Link to="/addpatient" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
           Add Patient
         </Link>
@@ -109,7 +109,7 @@ const PatientList = () => {
 
       {/* Search Bar */}
       <div className="bg-white rounded-xl shadow p-4 mb-6">
-        // Input field for searching patients by name
+        {/* // Input field for searching patients by name */}
         <input
           type="text"
           placeholder="Search patient by name..."

@@ -48,20 +48,22 @@ const AddPatient = () => {
             age: Number(patient.age)
           })
         })
-
+        // 3. Parse the response as JSON
         const data = await response.json()
-
+        // 4. Check if the response is not ok and set the error state accordingly
         if (!response.ok) {
           setError(data.error || 'Failed to create patient')
           return
         }
-
+        // 5. Log the created patient data to the console
         console.log('Patient created:', data)
 
         // Go back to patient list
         navigate('/patientslist')
-
-      } catch (error) {
+        
+      } 
+      // 6. Catch any errors that occur during the fetch request and set the error state
+      catch (error) {
         console.error('Error creating patient:', error)
         setError('Could not connect to the server')
       }

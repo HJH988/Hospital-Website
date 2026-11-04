@@ -76,7 +76,7 @@ const DashBoard = () => {
           <h2 className="text-gray-500 text-sm">
             Total Patients
           </h2>
-          // Display the total number of patients
+           {/* Display the total number of patients */}
           <p className="text-3xl font-bold mt-2">
             {totalPatients}
           </p>
@@ -92,7 +92,7 @@ const DashBoard = () => {
           <h2 className="text-gray-500 text-sm">
             Male Patients
           </h2>
-          // Display the total number of male patients
+           {/* Display the total number of male patients */}
           <p className="text-3xl font-bold mt-2">
             {malePatients}
           </p>
@@ -108,7 +108,7 @@ const DashBoard = () => {
           <h2 className="text-gray-500 text-sm">
             Female Patients
           </h2>
-          // Display the total number of female patients
+           {/* Display the total number of female patients */}
           <p className="text-3xl font-bold mt-2">
             {femalePatients}
           </p>
@@ -143,9 +143,9 @@ const DashBoard = () => {
 
           </div>
 
-// Display the list of recent patients or a message if there are none
+{/* // Display the list of recent patients or a message if there are none */}
 <div className="space-y-4">
-  // Check if there are no recent patients
+  {/* Check if there are no recent patients */}
   {recentPatients.length === 0 ? (
 
     <p className="text-gray-500">
