@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 const EditInfo = () => {
-
+  // State variables
   const { id } = useParams()
+  // navigate function to redirect after successful update
   const navigate = useNavigate()
   const [patient, setPatient] = useState({
     name: '',
