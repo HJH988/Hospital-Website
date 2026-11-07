@@ -22,7 +22,7 @@ const EditInfo = () => {
 useEffect(() => {
     // 1. Get the JWT token from localStorage
     const token = localStorage.getItem('token')
-
+    // Fetch patient id data from the backend
     fetch(`http://localhost:3000/patients/${id}`, {
       headers: {
         // 2. Add Authorization header
@@ -38,7 +38,7 @@ useEffect(() => {
       })
       .then(data => {
         console.log('Patient received:', data)
-
+        // Populate the form with the fetched patient data
         setPatient({
           name: data.name,
           age: data.age,
@@ -57,7 +57,7 @@ useEffect(() => {
       })
 
   }, [id])
-
+  // Handle input changes
   const handleChange = (event) => {
     const { name, value } = event.target
 
@@ -66,7 +66,7 @@ useEffect(() => {
       [name]: value
     })
   }
-
+// Handle form submission
 const handleSubmit = async (event) => {
     event.preventDefault()
 
