@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 
 const BreastCancerPage = () => {
-
+  // store the uploaded image and its preview
   const [image, setImage] = useState(null)
+  // store the detection result
   const [preview, setPreview] = useState(null)
-
+  // store the detection result response from the backend
   const [result, setResult] = useState(null)
-
+  // track the loading state of the detection process
   const [loading, setLoading] = useState(false)
 
   const handleImageChange = (event) => {
