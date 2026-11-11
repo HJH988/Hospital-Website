@@ -10,6 +10,7 @@ const BreastCancerPage = () => {
   // track the loading state of the detection process
   const [loading, setLoading] = useState(false)
 
+  // Handle image upload and preview
   const handleImageChange = (event) => {
 
     const file = event.target.files[0]
@@ -26,21 +27,21 @@ const BreastCancerPage = () => {
     setResult(null)
   }
 
-
+// Handle the detection process
 const handleDetection = async () => {
 
     if (!image) {
       alert('Please select an image first')
       return
     }
-
+    // Prepare the form data for the POST request
     const formData = new FormData()
-
+    // Append the image file to the form data
     formData.append(
       'image',
       image
     )
-
+    // Set loading state to true while the detection is in progress
     setLoading(true)
 
     try {
