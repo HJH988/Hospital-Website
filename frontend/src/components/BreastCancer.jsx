@@ -18,7 +18,7 @@ const BreastCancerPage = () => {
     if (!file) return
 
     setImage(file)
-
+    // Create a preview URL for the uploaded image
     setPreview(
       URL.createObjectURL(file)
     )
@@ -59,7 +59,7 @@ const handleDetection = async () => {
           body: formData
         }
       )
-
+      // 3. Parse the JSON response from the backend
       const data = await response.json()
 
       console.log(

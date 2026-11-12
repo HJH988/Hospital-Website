@@ -42,7 +42,6 @@ func DetectBreastCancer() gin.HandlerFunc {
 		// -----------------------------
 		// 3. Save uploaded image
 		// -----------------------------
-
 		filePath := filepath.Join(
 			"uploads",
 			file.Filename,
