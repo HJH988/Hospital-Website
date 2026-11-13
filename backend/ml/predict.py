@@ -38,7 +38,7 @@ def load_model():
     )
 
     in_features = model.classifier[1].in_features
-
+    #  Replace the classifier with a new one for binary classification
     model.classifier[1] = nn.Linear(
         in_features,
         1
