@@ -54,20 +54,55 @@ The exact structure may vary as the project develops. The main
 components are organised approximately as follows:
 
 ``` text
-project-root/
-├── frontend/                 # React application
-├── backend/                  # Go/Gin API
+Hospital Website/
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── services/             # API requests
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   └── main.jsx
+│   ├── .gitignore
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+│
+├── backend/
+│   ├── auth/
+│   │   └── jwt.go
 │   ├── controllers/
+│   │   ├── auth_controller.go
+│   │   ├── detection_controller.go
+│   │   └── patient_controller.go
 │   ├── database/
+│   │   └── database.go
 │   ├── middleware/
+│   │   └── auth_middleware.go
+│   ├── ml/
+│   │   ├── predict.py
+│   │   └── best_model.pt
 │   ├── models/
+│   │   ├── patient.go
+│   │   └── users.go
 │   ├── routes/
-│   ├── uploads/               # Uploaded images and Grad-CAM outputs
-│   ├── main.go
-│   └── .env                   # Local environment variables (not committed)
-└── ml/
-    ├── predict.py             # Image prediction and Grad-CAM script
-    └── best_model.pt          # Trained model checkpoint
+│   │   └── patient_routes.go
+│   ├── uploads/                  # Runtime-generated images
+│   ├── tests/                    # Go tests
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── go.mod
+│   ├── go.sum
+│   └── main.go
+│
+├── docs/
+├── .gitignore
+├── README.md
+└── package.json                   # Optional root tooling package
 ```
 
 Adjust the paths above to match the actual folders in your repository.
