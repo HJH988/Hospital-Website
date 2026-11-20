@@ -62,7 +62,6 @@ Hospital Website/
 │   │   ├── components/
 │   │   ├── layouts/
 │   │   ├── pages/
-│   │   ├── services/             # API requests
 │   │   ├── App.jsx
 │   │   ├── index.css
 │   │   └── main.jsx
