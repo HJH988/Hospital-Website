@@ -101,8 +101,6 @@ Hospital Website/
 │   └── .gitignore
 │   └── .env
 │
-├── docs/
-├── .gitignore
 ├── README.md
 └── package.json                   # Optional root tooling package
 ```
