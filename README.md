@@ -55,6 +55,7 @@ components are organised approximately as follows:
 
 ``` text
 Hospital Website/
+├── .venv/
 ├── frontend/
 │   ├── public/
 │   ├── src/
@@ -97,6 +98,8 @@ Hospital Website/
 │   ├── go.mod
 │   ├── go.sum
 │   └── main.go
+│   └── .gitignore
+│   └── .env
 │
 ├── docs/
 ├── .gitignore
