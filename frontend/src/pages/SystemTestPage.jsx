@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 
+// store API URL and patient endpoint for easy reuse.
 const API_URL = 'http://localhost:3000'
 const PATIENT_URL = `${API_URL}/patients`
 
 const SystemTestPage = () => {
+  // State to track the status and messages of each test.
   const [tests, setTests] = useState({
     backend: { status: 'Not tested', message: '' },
     database: { status: 'Not tested', message: '' },
@@ -15,7 +17,7 @@ const SystemTestPage = () => {
     patientUpdate: { status: 'Not tested', message: '' },
     patientDelete: { status: 'Not tested', message: '' },
   })
-
+  // State to track which tests are currently running.
   const [loading, setLoading] = useState({})
 
   // Update the displayed status of a test.
