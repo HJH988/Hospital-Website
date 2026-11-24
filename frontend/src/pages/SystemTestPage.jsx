@@ -81,6 +81,7 @@ const SystemTestPage = () => {
 
   // Create a temporary patient for an individual CRUD test.
   const createTemporaryPatient = async (headers) => {
+    // Use a unique name to avoid conflicts with existing records.
     const temporaryPatient = {
       name: `CRUD Test ${Date.now()}`,
       age: 30,
@@ -89,15 +90,15 @@ const SystemTestPage = () => {
       email: 'crud-test@example.com',
       medical_notes: 'Temporary record created by system test',
     }
-
+    // Send the request to create the patient.
     const response = await fetch(PATIENT_URL, {
       method: 'POST',
       headers,
       body: JSON.stringify(temporaryPatient),
     })
-
+    // Read the response body as JSON.
     const data = await readResponse(response)
-
+    // Check for errors in the response.
     if (!response.ok) {
       throw new Error(
         `Could not create temporary patient: ${
@@ -105,11 +106,11 @@ const SystemTestPage = () => {
         }`
       )
     }
-
+    // Ensure that the response contains an ID for the new patient.
     if (data.id == null) {
       throw new Error('The created patient response did not contain an ID.')
     }
-
+    // Return the ID and the temporary patient data for later verification.
     return {
       id: data.id,
       patient: temporaryPatient,
