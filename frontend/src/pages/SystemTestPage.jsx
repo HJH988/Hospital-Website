@@ -122,7 +122,7 @@ const SystemTestPage = () => {
     if (patientID == null) {
       return
     }
-
+    // Attempt to delete the temporary patient record.
     try {
       const response = await fetch(`${PATIENT_URL}/${patientID}`, {
         method: 'DELETE',
@@ -133,7 +133,7 @@ const SystemTestPage = () => {
       if (response.status === 404) {
         return
       }
-
+      // Log an error if the deletion failed for any other reason.
       if (!response.ok) {
         console.error(
           `Could not clean up temporary patient ${patientID}.`,
