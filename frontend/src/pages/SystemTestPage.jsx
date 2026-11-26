@@ -153,8 +153,9 @@ const SystemTestPage = () => {
   // --------------------------------------------------
   const testBackend = () =>
     runTest('backend', async () => {
+      // Attempt to fetch the root endpoint of the backend API.
       const response = await fetch(`${API_URL}/`)
-
+      // Read the response body as JSON.
       const data = await readResponse(response)
 
       if (!response.ok) {
