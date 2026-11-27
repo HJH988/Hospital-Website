@@ -206,20 +206,21 @@ const SystemTestPage = () => {
   // --------------------------------------------------
   const testAuthentication = () =>
     runTest('authentication', async () => {
+      // Attempt to access a protected endpoint using the saved token.
       const headers = getHeaders()
-
+      // Send the request to the patient endpoint.
       const response = await fetch(PATIENT_URL, { headers })
-
+      // Read the response body as JSON.
       if (response.status === 401) {
         throw new Error('Token is invalid or expired. Please log in again.')
       }
-
+      // Check for other errors in the response.
       if (!response.ok) {
         throw new Error(
           `Protected endpoint returned HTTP ${response.status}.`
         )
       }
-
+      // If we reach this point, the token was accepted and the endpoint was accessed.
       return {
         status: 'Passed',
         message: 'The saved token accessed a protected endpoint.',
