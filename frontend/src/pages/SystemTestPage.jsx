@@ -237,17 +237,17 @@ const SystemTestPage = () => {
       const response = await fetch(PATIENT_URL, { headers })
 
       const data = await readResponse(response)
-
+      // Check for errors in the response.
       if (!response.ok) {
         throw new Error(
           data.error || `Failed to retrieve patients: HTTP ${response.status}.`
         )
       }
-
+      // Ensure that the response is an array of patients.
       if (!Array.isArray(data)) {
         throw new Error('Expected a list of patients.')
       }
-
+      // If we reach this point, the patient list was retrieved successfully.
       return {
         status: 'Passed',
         message: `Successfully retrieved ${data.length} patient record(s).`,
