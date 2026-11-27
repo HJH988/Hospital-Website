@@ -178,22 +178,23 @@ const SystemTestPage = () => {
   // --------------------------------------------------
   const testDatabase = () =>
     runTest('database', async () => {
+      // Attempt to fetch the patient list to verify database connectivity.
       const headers = getHeaders()
-
+      // Send the request to the patient endpoint.
       const response = await fetch(PATIENT_URL, { headers })
-
+      // Read the response body as JSON.
       const data = await readResponse(response)
-
+      // Check for errors in the response.
       if (!response.ok) {
         throw new Error(
           data.error || `Patient query failed: HTTP ${response.status}.`
         )
       }
-
+      // Ensure that the response is an array of patients.
       if (!Array.isArray(data)) {
         throw new Error('Unexpected patient list response.')
       }
-
+      // If we reach this point, the database query was successful.
       return {
         status: 'Passed',
         message: 'Patient records were queried successfully.',
